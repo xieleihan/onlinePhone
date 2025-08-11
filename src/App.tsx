@@ -44,8 +44,8 @@ function App() {
         .toString(36)
         .padStart(4, "0")}`,
       {
-      host: window.location.hostname,
-      port: 8000,
+      host: import.meta.env.VITE_PEER_HOST || 'localhost',
+      port: import.meta.env.VITE_PEER_PORT || 9000,
       path: "/audio",
       debug: 1,
     });

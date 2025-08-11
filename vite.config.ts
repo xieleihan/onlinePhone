@@ -78,7 +78,7 @@ export default defineConfig({
       generateScopedName: '[name]__[local]__[hash:base64:6]', // CSS模块化
     }
   },
-  base: '/', // 设置基础路径
+  base: '/onlinePhone/', // 设置基础路径
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
