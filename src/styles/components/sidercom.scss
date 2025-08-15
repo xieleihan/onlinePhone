@@ -1,0 +1,13 @@
+.top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+
+    .btn {
+        width: 50%;
+
+    }
+}

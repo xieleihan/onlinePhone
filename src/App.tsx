@@ -25,10 +25,10 @@ function App() {
       <div className='app'>
         {isStartPages ? (
           <>
-            <Card>
+            <Card className='card'>
               <div className='startPages'>
-                <h1>wifi calling</h1>
-                <p>在线电话</p>
+                <h1 className='title'>wifi calling</h1>
+                <p className='desc'>在线电话</p>
                 <Button type='primary' onClick={() => {
                   handleEnterApp();
                 }}>进入应用</Button>
