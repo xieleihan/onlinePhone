@@ -15,7 +15,7 @@ interface RouteType {
 // 路由数组
 const routes: RouteType[] = [
     {
-        path: '/',
+        path: process.env.NODE_ENV === 'production' ? '/onlinePhone/' : '/',
         element: (
             <Suspense fallback={<Spin size="large" />}>
                 <App />
@@ -23,7 +23,7 @@ const routes: RouteType[] = [
         ),
     },
     {
-        path: '/home',
+        path: process.env.NODE_ENV === 'production' ? '/onlinePhone/home' : '/home',
         element: (
             <Suspense fallback={<Spin size="large" />}>
                 <HomePages />
