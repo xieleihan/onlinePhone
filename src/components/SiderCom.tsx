@@ -1,4 +1,4 @@
-import { Button, Modal, message, Input } from "antd";
+import { Button, Modal, message, Input,notification } from "antd";
 import '@/styles/components/sidercom.scss';
 import { AudioOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import { useState, useEffect, useRef } from "react";
@@ -14,6 +14,7 @@ function SiderCom() {
     const [receiveCallModalOpen, setReceiveCallModalOpen] = useState(false);
     const [isVideoCall, setIsVideoCall] = useState(false); // ✅ 是否视频通话
     const [messageApi, contextHolder] = message.useMessage();
+    const [notificationApi, notificationContextHolder] = notification.useNotification();
 
     const peerRef = useRef<Peer | null>(null);
     const localStreamRef = useRef<MediaStream | null>(null);
@@ -68,6 +69,41 @@ function SiderCom() {
             messageApi.error("无法访问摄像头/麦克风");
             return null;
         }
+    };
+
+    const showNotification = () => {
+        notificationApi.open({
+            message: '📹 视频通话',
+            description: (
+                <div className="video-container">
+                    <video
+                        ref={localVideoRef}
+                        muted
+                        autoPlay
+                        playsInline
+                        style={{
+                            width: "200px",
+                            display: isVideoCall ? "block" : "none",
+                            borderRadius: "8px",
+                            marginRight: "8px"
+                        }}
+                    />
+                    <video
+                        ref={remoteVideoRef}
+                        autoPlay
+                        playsInline
+                        style={{
+                            width: "400px",
+                            display: isVideoCall ? "block" : "none",
+                            borderRadius: "8px"
+                        }}
+                    />
+                </div>
+            ),
+            duration: 0, // 通话时不要自动消失
+            placement: "topRight", // 右上角显示
+            style: { width: 450 } // 调整宽度
+        });
     };
 
     // 发起呼叫
@@ -160,14 +196,11 @@ function SiderCom() {
     return (
         <>
             {contextHolder}
+            {notificationContextHolder}
             {/* 隐藏的音频播放器 */}
             <audio ref={remoteAudioRef} autoPlay controls={false} style={{ display: 'none' }} />
 
-            {/* 视频窗口 */}
-            <div className="video-container">
-                <video ref={localVideoRef} muted autoPlay playsInline style={{ width: "200px", display: isVideoCall ? "block" : "none" }} />
-                <video ref={remoteVideoRef} autoPlay playsInline style={{ width: "400px", display: isVideoCall ? "block" : "none" }} />
-            </div>
+            
 
             <div className="top">
                 <Button
@@ -198,6 +231,7 @@ function SiderCom() {
                         }
                         setIsVideoCall(true); // ✅ 视频模式
                         setCallModalOpen(true);
+                        showNotification()
                     }}
                     disabled={!peerId}
                 >
