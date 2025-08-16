@@ -1,4 +1,5 @@
-export function getUserMedia(constraints = { video: false, audio: true }): Promise<MediaStream> {
+// 需要获取摄像头和麦克风权限
+export function getUserMedia(constraints = { video: true, audio: true }): Promise<MediaStream> {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         return navigator.mediaDevices.getUserMedia(constraints);
     }
