@@ -17,7 +17,7 @@ function App() {
   
   function handleEnterApp() {
     setIsStartPages(false);
-    navigate('/home');
+    navigate(process.env.NODE_ENV === 'production' ? '/onlinePhone/home' : '/home');
   }
 
   return (
